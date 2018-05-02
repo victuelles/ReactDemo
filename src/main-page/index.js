@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
 import './main-page.css';
-import Header from './header';
-import FeatureHouse from './featured-house';
-import HouseFilter from './house-filter';
-import SearchResults from '../search-results';
-import HouseDetail from '../house';
-
+import AppPresentation from './app-presentation';
 
 class App extends Component {
 
- /* constructor(props){
-    super(props);
-    this.state={};
-  }
-  or simply by property initializer
-  */
   state= {}
 
   componentDidMount() {
@@ -63,9 +51,9 @@ class App extends Component {
     //reset active house to null
     this.setState({activeHouse:null});
     //create new houses filter by country name
-    const filterHouses = this.allHouses.filter((h) => h.country === country);
+    const filteredHouses = this.allHouses.filter((h) => h.country === country);
     //put new array and country on state
-    this.setState({filterHouses});
+    this.setState({filteredHouses});
     this.setState({country});
   }
 
@@ -75,23 +63,14 @@ class App extends Component {
   }
 
   render() {
-    let activeComponent =null;
-    if(this.state.country)
-      activeComponent= <SearchResults country={this.state.country}
-                    filteredHouses={this.state.filterHouses}
-                    setActiveHouse={this.setActiveHouse} />;
-    if(this.state.activeHouse)
-      activeComponent=<HouseDetail house={this.state.activeHouse}/>;
-    if(!activeComponent) 
-      activeComponent=  <FeatureHouse house={this.state.featuredHouse} />;
-
-    return (
-      <div className="container">
-        <Header subtitle="Providing house all over the world!" />
-        <HouseFilter countries={this.state.countries} filterHouses={this.filterHouses}/>
-        {activeComponent}
-      </div>
-    );
+    return(<AppPresentation country={this.state.country}
+          filterHouses={this.filterHouses}
+          featuredHouse={this.state.featuredHouse}
+          countries={this.state.countries}
+          filteredHouses={this.state.filteredHouses}
+          activeHouse={this.state.activeHouse}
+          setActiveHouse={this.setActiveHouse}      
+    />)
   }
 }
 
